@@ -1,0 +1,56 @@
+<div id="trust-badges-block"></div>
+<script>
+  const APP_URL = "{{ block.settings.app_url }}";
+  fetch(`${APP_URL}/trust`)
+    .then(response => response.json())
+    .then(data => {
+      if (Array.isArray(data)) {
+        document.getElementById('trust-badges-block').innerHTML =
+          data.map(badge => `
+            <div style="margin-bottom:16px;">
+                <img 
+                src="${APP_URL}${badge.imageUrl}" 
+                alt="Trust badge" 
+                loading="lazy" 
+                style="width:{{ block.settings.badge_width }}px;height:{{ block.settings.badge_height }}px;vertical-align:middle;margin-right:8px;" 
+                />
+            </div>
+         `).join('');
+      }
+    })
+    .catch(err => {
+      console.error("Error fetching trust badges:", err);
+    });
+</script>
+
+{% schema %}
+{
+  "name": "Trust Badge",
+  "target": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "app_url",
+      "label": "App URL"
+    },
+    {
+      "type": "range",
+      "id": "badge_width",
+      "min": 100,
+      "max": 500,
+      "step": 10,
+      "label": "Badge Width (px)",
+      "default": 360
+    },
+    {
+      "type": "range",
+      "id": "badge_height",
+      "min": 50,
+      "max": 500,
+      "step": 10,
+      "label": "Badge Height (px)",
+      "default": 150
+    }
+  ]
+}
+{% endschema %}
