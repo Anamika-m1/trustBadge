@@ -30,7 +30,10 @@ export async function loader({ request }) {
 }
 
 export default function TrustBadge() {
-  const [selectedBadges, setSelectedBadges] = useState([]);
+  const { savedBadges } = useLoaderData();
+  const [selectedBadges, setSelectedBadges] = useState(
+    savedBadges?.map(b => b.id) || []
+  );
 
   const saveSelectedBadges = async () => {
   const selectedBadgeObjects = selectedBadges.map(id => {
