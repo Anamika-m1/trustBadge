@@ -23,11 +23,9 @@ const badgeImages = [
 ];
 
 export async function loader({ request }) {
-  const { session } = await authenticate.admin(request);
-  const shop = session.shop;
+  await authenticate.admin(request);
 
-  const savedBadges = await prisma.badges.findMany({ where: { shop } });
-  return { savedBadges };
+  return null;
 }
 
 export default function TrustBadge() {
