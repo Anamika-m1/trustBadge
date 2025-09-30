@@ -2,7 +2,7 @@
 
 client_id = "94f1d38f6ef42f035cf175f89cafdd7c"
 name = "Trust-badge"
-application_url = "https://example.com"
+application_url = "https://trust-badge.vercel.app/"
 embedded = true
 
 [build]
@@ -25,4 +25,4 @@ api_version = "2025-10"
 scopes = "write_products"
 
 [auth]
-redirect_urls = [ "https://example.com/api/auth" ]
+redirect_urls = [ "https://trust-badge.vercel.app/api/auth" ]
