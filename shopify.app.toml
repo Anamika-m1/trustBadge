@@ -25,4 +25,4 @@ api_version = "2025-10"
 scopes = "write_products"
 
 [auth]
-redirect_urls = [ "https://trust-badge.vercel.app/api/auth" ]
+redirect_urls = [ "https://trust-badge.vercel.app/auth/callback" ]
