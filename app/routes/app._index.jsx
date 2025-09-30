@@ -1,6 +1,5 @@
 import { useState } from "react";
-import { authenticate } from "../shopify.server"; 
-import prisma from "../db.server"
+
 import { useLoaderData } from "@remix-run/react";
 
 import {
