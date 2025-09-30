@@ -1,6 +1,8 @@
 import { PassThrough } from "stream";
 import { renderToPipeableStream } from "react-dom/server";
 import { RemixServer } from "@remix-run/react";
+// import { createReadableStreamFromReadable } from "@remix-run/node";
+import { createReadableStreamFromReadable } from "@vercel/remix";
 import { isbot } from "isbot";
 import { addDocumentResponseHeaders } from "./shopify.server";
 
@@ -22,10 +24,11 @@ export default async function handleRequest(
       {
         [callbackName]: () => {
           const body = new PassThrough();
+          const stream = createReadableStreamFromReadable(body);
 
           responseHeaders.set("Content-Type", "text/html");
           resolve(
-            new Response(body, {
+            new Response(stream, {
               headers: responseHeaders,
               status: responseStatusCode,
             }),
@@ -42,6 +45,8 @@ export default async function handleRequest(
       },
     );
 
+    // Automatically timeout the React renderer after 6 seconds, which ensures
+    // React has enough time to flush down the rejected boundary contents
     setTimeout(abort, streamTimeout + 1000);
   });
 }
