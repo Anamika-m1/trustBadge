@@ -28,7 +28,9 @@ export async function loader({ request }) {
   const savedBadges = await prisma.badges.findMany({ where: { shop } });
   return { savedBadges };
 }
-
+export default function AppIndex() {
+  return <h1>Welcome to the Trust Badge App!</h1>;
+}
 export default function TrustBadge() {
   const { savedBadges } = useLoaderData();
   const [selectedBadges, setSelectedBadges] = useState(
