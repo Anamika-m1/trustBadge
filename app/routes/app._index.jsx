@@ -1,120 +1,77 @@
-import { useState } from "react";
-
-import { useLoaderData } from "@remix-run/react";
-
 import {
-  Page,
+  Box,
   Card,
-  BlockStack,
+  Layout,
+  Page,
   Text,
-  InlineStack,
+  BlockStack,
   Button,
-  Layout
+  InlineStack
 } from "@shopify/polaris";
 import { TitleBar } from "@shopify/app-bridge-react";
+export default function AdditionalPage() {
+  return (
+    <Page>
+      <TitleBar title="Techies Trust Badge" />
+      <Layout>
+        <Layout.Section>
+          <BlockStack gap="400">
+            <Box>
+              <Text variant="headingLg" as="h1">
+                Hi! 👋
+              </Text>
+              <Text variant="bodyMd" tone="subdued">
+                Welcome to Techies Trust Badge
+              </Text>
+            </Box>
 
+            <Card>
+              <BlockStack gap="400">
+                <Box>
+                  <Text variant="headingMd" as="h2">
+                    Setup guide
+                  </Text>
+                  <Text variant="bodyMd" tone="subdued">
+                    Use this guide to quickly setup your offer
+                  </Text>
+                </Box>
 
-const badgeImages = [
-  { id: "badge2", src: "/badges/money-back-guarantee.png", alt: "Badge 2" },
-  { id: "badge1", src: "/badges/free-shipping.png", alt: "Badge 1" },
-  { id: "badge3", src: "/badges/money-back-guarantee-2.png", alt: "Badge 3" },
-  { id: "badge5", src: "/badges/money-back-guarantee-3.png", alt: "Badge 5" },
-];
+                <BlockStack gap="400">
+                  <Box>
+                    <InlineStack gap="200">
+                      <Text variant="bodyLg" as="span" fontWeight="bold" style={{ fontSize: "2rem" }}>•</Text>
+                      <Text variant="bodyLg">Enable app</Text>
+                    </InlineStack>
+                  </Box>
 
-export async function loader({ request }) {
-  const { authenticate } = await import("../shopify.server");
-  const prisma = (await import("../db.server")).default;
-  const { session } = await authenticate.admin(request);
-  const shop = session.shop;
+                  <Box padding="40" background="bg-surface-secondary" border="base" borderRadius="2">
+                    <BlockStack gap="300">
+                      <InlineStack gap="200">
+                        <Text variant="bodyLg" as="span" fontWeight="bold" style={{ fontSize: "2rem" }}>•</Text>
+                        <Text variant="bodyLg" fontWeight="semibold">Select your Trust Badges</Text>
+                      </InlineStack>
 
-  const savedBadges = await prisma.badges.findMany({ where: { shop } });
-  return { savedBadges };
-}
+                      <Text variant="bodyLg" tone="subdued">
+                        Set up your Trust Badges with multiple badges to increase store credibility
+                      </Text>
+                      <Box>
+                        <Button size="slim" variant="primary" url="/app/trustBadge">Select badges</Button>
+                      </Box>
+                    </BlockStack>
+                  </Box>
 
-export default function TrustBadge() {
-  const { savedBadges } = useLoaderData();
-  const [selectedBadges, setSelectedBadges] = useState(
-    savedBadges?.map(b => b.id) || []
-  );
-
-  const saveSelectedBadges = async () => {
-  const selectedBadgeObjects = selectedBadges.map(id => {
-    const badge = badgeImages.find(b => b.id === id);
-    return badge
-      ? {
-          id: badge.id,
-          image_url: badge.src,
-        }
-      : null;
-    }).filter(Boolean);   
-  
-    await fetch("/app/trustBadge", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ badges: selectedBadgeObjects }),
-    });
-    console.log("Badges saved");
-  };
-
- return (
-  <Page title="New Trust Badges">
-    <TitleBar title="Techies Trust Badge"></TitleBar>
-    <Layout>
-    <Layout.Section>
-      <Card title="Select Badges">
-      <Text variant="headingMd">Select Badges</Text>
-      <BlockStack gap="400">
-        {badgeImages.map((badge) => (
-        <label key={badge.id} style={{ display: "flex", alignItems: "center", marginBottom: "16px", cursor: "pointer" }}>
-          <input
-            type="radio"
-            name="badge"
-            value={badge.id}
-            checked={selectedBadges[0] === badge.id}
-            onChange={() => setSelectedBadges([badge.id])}
-            style={{ marginRight: "16px" }}
-          />
-          <img
-            src={badge.src}
-            alt={badge.alt}
-            style={{ width: "80%", height: "80%", objectFit: "contain", marginRight: "2px" }}
-          />
-        </label>
-        ))}
-        <InlineStack>
-          <Button
-            variant="primary"
-            onClick={saveSelectedBadges}
-          >
-            Save Badges
-          </Button>
-        </InlineStack>
-      </BlockStack>
-      </Card>
-    </Layout.Section>
-    <Layout.Section variant="oneThird">
-      <Card title="Preview">
-      <Text variant="headingMd">Preview</Text>
-      <BlockStack gap="200">
-        {selectedBadges.length === 0 ? (
-          <Text>No badges selected</Text>
-        ) : (
-          selectedBadges.map((id) => {
-            const badge = badgeImages.find((b) => b.id === id);
-            return (
-              <img
-                key={id}
-                src={badge?.src}
-                alt={badge?.alt}
-                style={{ width: "100%", height: 80, objectFit: "contain", background: "none", border: "none", boxShadow: "none", display: "block", marginBottom: "12px" }}
-              />
-            );
-          })
-        )}
-      </BlockStack>
-      </Card>
-    </Layout.Section>
-    </Layout>
-  </Page>
+                  <Box>
+                    <InlineStack gap="200">
+                      <Text variant="bodyLg" as="span" fontWeight="bold" style={{ fontSize: "2rem" }}>•</Text>
+                      <Text variant="bodyLg">Visualize how it appears on your store</Text>
+                    </InlineStack>
+                  </Box>
+                </BlockStack>
+              </BlockStack>
+            </Card>
+          </BlockStack>
+        </Layout.Section>
+      </Layout>
+    </Page>
   );
 }

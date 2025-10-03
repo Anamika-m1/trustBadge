@@ -1,21 +1,31 @@
-<div id="trust-badges-block"></div>
+<div id="trust-badges-block">
+  {%- if block.settings.heading -%}
+    <{{ block.settings.heading_tag }} style="font-size:{{ block.settings.heading_size }};">
+      {{ block.settings.heading }}
+    </{{ block.settings.heading_tag }}>
+  {%- endif -%}
+  {%- if block.settings.description -%}
+    <div>{{ block.settings.description }}</div>
+  {%- endif -%}
+</div>
 <script>
-  const APP_URL = "{{ block.settings.app_url }}";
+  const APP_URL = "https://trust-badge.vercel.app";
   fetch(`${APP_URL}/trust`)
     .then(response => response.json())
     .then(data => {
       if (Array.isArray(data)) {
-        document.getElementById('trust-badges-block').innerHTML =
-          data.map(badge => `
-            <div style="margin-bottom:16px;">
-                <img 
-                src="${APP_URL}${badge.imageUrl}" 
-                alt="Trust badge" 
-                loading="lazy" 
-                style="width:{{ block.settings.badge_width }}px;height:{{ block.settings.badge_height }}px;vertical-align:middle;margin-right:8px;" 
-                />
-            </div>
-         `).join('');
+        const container = document.getElementById('trust-badges-block');
+        const badgesHtml = data.map(badge => `
+          <div style="margin-bottom:16px;">
+            <img 
+              src="${APP_URL}${badge.imageUrl}" 
+              alt="Trust badge" 
+              loading="lazy" 
+              style="width:{{ block.settings.badge_width }}px;height:{{ block.settings.badge_height }}px;vertical-align:middle;margin-right:8px;" 
+            />
+          </div>
+        `).join('');
+        container.innerHTML += badgesHtml; // Append images after heading/description
       }
     })
     .catch(err => {
@@ -29,9 +39,86 @@
   "target": "section",
   "settings": [
     {
-      "type": "text",
-      "id": "app_url",
-      "label": "App URL"
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "t:sections.all.ui.heading"
+    },
+    {
+      "type": "select",
+      "id": "heading_tag",
+      "label": "t:sections.all.heading_tag.label",
+      "options": [
+        {
+          "value": "h1",
+          "label": "t:sections.all.heading_tag.h1.label"
+        },
+        {
+          "value": "h2",
+          "label": "t:sections.all.heading_tag.h2.label"
+        },
+        {
+          "value": "h3",
+          "label": "t:sections.all.heading_tag.h3.label"
+        },
+        {
+          "value": "h4",
+          "label": "t:sections.all.heading_tag.h4.label"
+        },
+        {
+          "value": "h5",
+          "label": "t:sections.all.heading_tag.h5.label"
+        },
+        {
+          "value": "h6",
+          "label": "t:sections.all.heading_tag.h6.label"
+        },
+        {
+          "value": "p",
+          "label": "t:sections.all.heading_tag.p.label"
+        },
+        {
+          "value": "div",
+          "label": "t:sections.all.heading_tag.div.label"
+        },
+        {
+          "value": "span",
+          "label": "t:sections.all.heading_tag.span.label"
+        }
+      ],
+      "default": "h2"
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "options": [
+        {
+          "value": "h1",
+          "label": "t:sections.all.heading_size.h1.label"
+        },
+        {
+          "value": "h2",
+          "label": "t:sections.all.heading_size.h2.label"
+        },
+        {
+          "value": "h3",
+          "label": "t:sections.all.heading_size.h3.label"
+        },
+        {
+          "value": "h4",
+          "label": "t:sections.all.heading_size.h4.label"
+        },
+        {
+          "value": "h5",
+          "label": "t:sections.all.heading_size.h5.label"
+        }
+      ],
+      "default": "h2",
+      "label": "t:sections.all.heading_size.label"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "t:sections.all.ui.description"
     },
     {
       "type": "range",

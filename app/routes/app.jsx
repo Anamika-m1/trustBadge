@@ -22,7 +22,7 @@ export default function App() {
         <Link to="/app" rel="home">
           Home
         </Link>
-        <Link to="/app/additional">Trust Badge</Link>
+        <Link to="/app/trustBadge">Select Badge</Link>
       </NavMenu>
       <Outlet />
     </AppProvider>

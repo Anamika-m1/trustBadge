@@ -1,0 +1,58 @@
+{
+  "sections": {
+    "all": {
+      "ui": {
+        "description": "Description",
+        "heading": "Heading",
+      },
+      "heading_tag": {
+        "label": "Heading hierarchy tag",
+        "h1": {
+          "label": "h1"
+        },
+        "h2": {
+          "label": "h2"
+        },
+        "h3": {
+          "label": "h3"
+        },
+        "h4": {
+          "label": "h4"
+        },
+        "h5": {
+          "label": "h5"
+        },
+        "h6": {
+          "label": "h6"
+        },
+        "p": {
+          "label": "p"
+        },
+        "div": {
+          "label": "div"
+        },
+        "span": {
+          "label": "span"
+        }
+      },
+      "heading_size": {
+        "label": "Heading size",
+        "h1": {
+          "label": "Extra large"
+        },
+        "h2": {
+          "label": "Large"
+        },
+        "h3": {
+          "label": "Medium"
+        },
+        "h4": {
+          "label": "Small"
+        },
+        "h5": {
+          "label": "Extra small"
+        }
+      }
+    }
+  }
+}
