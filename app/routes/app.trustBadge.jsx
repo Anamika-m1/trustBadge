@@ -11,10 +11,11 @@ import {
   Tabs,
   Layout,
   DropZone,
-  Thumbnail
+  Thumbnail,
+  Toast
 } from "@shopify/polaris";
 import { TitleBar } from "@shopify/app-bridge-react";
-
+import { Frame } from "@shopify/polaris";
 
 const badgeImages = [
   { id: "badge2", src: "/badges/money-back-guarantee.png", alt: "Badge 2" },
@@ -39,6 +40,7 @@ export default function TrustBadge() {
   const [selectedTab, setSelectedTab] = useState(0);
   const [uploadedFilePreviews, setUploadedFilePreviews] = useState([]);
   const [uploadedBadgePreview, setUploadedBadgePreview] = useState(null);
+  const [showToast, setShowToast] = useState(false);
 
   const handleDropZoneDrop = (_dropFiles, acceptedFiles, _rejectedFiles) => {
     setUploadedFiles((files) => [...files, ...acceptedFiles]);
@@ -82,7 +84,7 @@ export default function TrustBadge() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ badges: selectedBadgeObjects }),
     });
-    console.log("Badges saved");
+    setShowToast(true);
   };
 
   const saveUploadedBadge = async () => {
@@ -104,14 +106,22 @@ export default function TrustBadge() {
           ],
         }),
       });
-      console.log("Uploaded badge saved");
+      setShowToast(true);
     };
     reader.readAsDataURL(file);
   };
 
   return (
+    <Frame>
     <Page title="New Trust Badges">
-      <TitleBar title="Techies Trust Badge" />
+      <TitleBar title="TrustSeal Trust Badge" />
+      {showToast && (
+        <Toast
+          content="Badge saved successfully!"
+          onDismiss={() => setShowToast(false)}
+          duration={3000}
+        />
+      )}
       <Layout>
         <Layout.Section>
           <Card title="Select Badges">
@@ -271,5 +281,6 @@ export default function TrustBadge() {
         </Layout.Section>
       </Layout>
     </Page>
+    </Frame>
   );
 }

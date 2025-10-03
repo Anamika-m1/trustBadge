@@ -12,7 +12,7 @@ import { TitleBar } from "@shopify/app-bridge-react";
 export default function AdditionalPage() {
   return (
     <Page>
-      <TitleBar title="Techies Trust Badge" />
+      <TitleBar title="TrustSeal Trust Badge" />
       <Layout>
         <Layout.Section>
           <BlockStack gap="400">
