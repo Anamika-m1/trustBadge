@@ -2,7 +2,9 @@ import prisma from "../db.server";
 
 export const loader = async () => {
 
-  const badges = await prisma.badges.findMany();
+  const badges = await prisma.badges.findMany({
+    where: { isSelected: true }
+  });
   return new Response(JSON.stringify(badges), {
     headers: {
       "Content-Type": "application/json",

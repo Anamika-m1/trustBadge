@@ -15,17 +15,22 @@
     .then(data => {
       if (Array.isArray(data)) {
         const container = document.getElementById('trust-badges-block');
-        const badgesHtml = data.map(badge => `
-          <div style="margin-bottom:16px;">
-            <img 
-              src="${APP_URL}${badge.imageUrl}" 
-              alt="Trust badge" 
-              loading="lazy" 
-              style="width:{{ block.settings.badge_width }}px;height:{{ block.settings.badge_height }}px;vertical-align:middle;margin-right:8px;" 
-            />
-          </div>
-        `).join('');
-        container.innerHTML += badgesHtml; // Append images after heading/description
+        const badgesHtml = data.map(badge => {
+          const isFullUrl = badge.imageUrl.startsWith('http://') || badge.imageUrl.startsWith('https://');
+          const imageSrc = isFullUrl ? badge.imageUrl : `${APP_URL}${badge.imageUrl}`;
+          
+          return `
+            <div style="margin-bottom:16px;">
+              <img 
+                src="${imageSrc}" 
+                alt="Trust badge" 
+                loading="lazy" 
+                style="width:{{ block.settings.badge_width }}px;height:{{ block.settings.badge_height }}px;vertical-align:middle;margin-right:8px;" 
+              />
+            </div>
+          `;
+        }).join('');
+        container.innerHTML += badgesHtml; 
       }
     })
     .catch(err => {

@@ -35,7 +35,7 @@ model Badges{
   id          Int      @id @default(autoincrement())
   shop        String
   imageUrl    String
-  @@unique([shop, imageUrl])
+  isSelected  Boolean  @default(false)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }
