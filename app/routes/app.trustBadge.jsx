@@ -17,10 +17,10 @@ import { TitleBar } from "@shopify/app-bridge-react";
 import { Frame } from "@shopify/polaris";
 
 const badgeImages = [
-  { id: "badge2", src: "/badges/money-back-guarantee.png", alt: "Badge 2" },
-  { id: "badge1", src: "/badges/free-shipping.png", alt: "Badge 1" },
-  { id: "badge3", src: "/badges/money-back-guarantee-2.png", alt: "Badge 3" },
-  { id: "badge5", src: "/badges/money-back-guarantee-3.png", alt: "Badge 5" },
+  { id: "badge2", src: "/badges/Group3.png", alt: "Badge 2" },
+  { id: "badge1", src: "/badges/Group4.png", alt: "Badge 1" },
+  { id: "badge3", src: "/badges/image6.png", alt: "Badge 3" },
+  // { id: "badge5", src: "/badges/money-back-guarantee-3.png", alt: "Badge 5" },
 ];
 
 export async function loader({ request }) {
@@ -143,7 +143,7 @@ export default function TrustBadge() {
   return (
     <Frame>
       <Page title="New Trust Badges">
-        <TitleBar title="TrustSeal Trust Badge" />
+        <TitleBar title="Trustily - Trust Seal Badge" />
         {showToast && (
           <Toast
             content="Badge saved successfully!"
