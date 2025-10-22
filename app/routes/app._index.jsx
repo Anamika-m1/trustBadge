@@ -9,6 +9,36 @@ import {
   InlineStack
 } from "@shopify/polaris";
 import { TitleBar } from "@shopify/app-bridge-react";
+
+function ScriptBlock() {
+  const shop =
+    (typeof window !== "undefined" && new URLSearchParams(window.location.search).get("shop")) ||
+    process.env.SHOPIFY_STORE_DOMAIN;
+  const adminUrl = shop
+    ? `https://${shop}/admin/themes/current/editor?&template=product&addAppBlock=trust-badge`
+    : "https://admin.shopify.com/";
+  const handleClick = () => {
+    if (typeof window === "undefined") return;
+    try {
+      window.top.location.href = adminUrl;
+    } catch (e) {
+      window.location.href = adminUrl;
+    }
+  };
+  return (
+    <Box style={{ display: "flex", paddingTop: 12 }}>
+      <Button
+        primary
+        type="button"
+        onClick={handleClick}
+        size="slim" variant="primary"
+      >
+        Add Trustily Seal to My Store
+      </Button>
+    </Box>
+  );
+}
+
 export default function AdditionalPage() {
   return (
     <Page>
@@ -21,7 +51,7 @@ export default function AdditionalPage() {
                 Hi! 👋
               </Text>
               <Text variant="bodyMd" tone="subdued">
-                Welcome to Techies Trust Badge
+                Welcome to Trustily Trust Badge
               </Text>
             </Box>
 
@@ -61,10 +91,34 @@ export default function AdditionalPage() {
                   </Box>
 
                   <Box>
+                    <BlockStack gap="200">
                     <InlineStack gap="200">
                       <Text variant="bodyLg" as="span" fontWeight="bold" style={{ fontSize: "2rem" }}>•</Text>
                       <Text variant="bodyLg">Visualize how it appears on your store</Text>
                     </InlineStack>
+
+                     <Text variant="bodyLg" fontWeight="semibold">Install the Trustily app from the Shopify App Store</Text>
+                      </BlockStack>
+                      <BlockStack gap="100" style={{ paddingLeft: 12 }}>
+                        <ol style={{ margin: 0, paddingLeft: 20 }}>
+                          <li style={{ marginBottom: 8 }}>
+                            <Text variant="bodyMd">From your Shopify admin, go to Online Store → Customize.</Text>
+                          </li>
+                          <li style={{ marginBottom: 8 }}>
+                            <Text variant="bodyMd">Select the theme you want to add the Trustily Trust Seal to.</Text>
+                          </li>
+                          <li style={{ marginBottom: 8 }}>
+                            <Text variant="bodyMd">In the Theme Editor, click Add section → Apps → Trustily – Trust Seal.</Text>
+                          </li>
+                          <li style={{ marginBottom: 8 }}>
+                            <Text variant="bodyMd">Choose your preferred trust badge style, position, and size.</Text>
+                          </li>
+                          <li style={{ marginBottom: 8 }}>
+                            <Text variant="bodyMd">Click Save to apply changes.</Text>
+                          </li>
+                        </ol>
+                      </BlockStack>
+                      <ScriptBlock />
                   </Box>
                 </BlockStack>
               </BlockStack>
