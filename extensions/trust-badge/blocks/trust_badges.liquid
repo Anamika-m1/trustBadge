@@ -1,11 +1,11 @@
 {{ 'app.css' | asset_url | stylesheet_tag }}
 <div id="trust-badges-block">
-  {%- if block.settings.heading -%}
-    <{{ block.settings.heading_tag }} style="font-size:{{ block.settings.heading_size }};">
+  {%- if block.settings.heading != empty -%}
+    <{{ block.settings.heading_tag }} class="{{ block.settings.heading_size }}">
       {{ block.settings.heading }}
     </{{ block.settings.heading_tag }}>
   {%- endif -%}
-  {%- if block.settings.description -%}
+  {%- if block.settings.description != empty -%}
     <div>{{ block.settings.description }}</div>
   {%- endif -%}
 </div>
