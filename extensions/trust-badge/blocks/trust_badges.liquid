@@ -10,24 +10,24 @@
 </div>
 <script>
   const APP_URL = "https://trust-badge.vercel.app";
-  fetch(`${APP_URL}/trust`)
+  const SHOP = "{{ shop.permanent_domain }}";
+  fetch(`${APP_URL}/trust?shop=${SHOP}`)
     .then(response => response.json())
     .then(data => {
       if (Array.isArray(data)) {
         const container = document.getElementById('trust-badges-block');
         const badgesHtml = data.map(badge => {
           const isFullUrl = badge.imageUrl.startsWith('http://') || badge.imageUrl.startsWith('https://');
-          const imageSrc = isFullUrl ? badge.imageUrl : `${APP_URL}${badge.imageUrl}`;
-          
+          const imageSrc = isFullUrl ? badge.imageUrl : `${APP_URL}${badge.imageUrl}`;          
           return `
-            <div style="margin-bottom:16px;">
-              <img 
-                src="${imageSrc}" 
-                alt="Trust badge" 
-                loading="lazy" 
-                style="width:{{ block.settings.badge_width }}px;height:{{ block.settings.badge_height }}px;vertical-align:middle;margin-right:8px;" 
-              />
-            </div>
+          <div style="margin-bottom:16px;max-width:{{ block.settings.badge_width }}px;">
+            <img 
+              src="${imageSrc}" 
+              alt="Trust badge" 
+              loading="lazy" 
+              style="width:100%;height:{{ block.settings.badge_height }}px;display:block;" 
+            />
+          </div>
           `;
         }).join('');
         container.innerHTML += badgesHtml; 
@@ -132,7 +132,7 @@
       "max": 500,
       "step": 10,
       "label": "Badge Width (px)",
-      "default": 360
+      "default": 410
     },
     {
       "type": "range",
@@ -141,7 +141,7 @@
       "max": 500,
       "step": 10,
       "label": "Badge Height (px)",
-      "default": 150
+      "default": 110
     }
   ]
 }
