@@ -1,11 +1,11 @@
 {{ 'app.css' | asset_url | stylesheet_tag }}
 <div id="trust-badges-block">
-  {%- if block.settings.heading != empty -%}
+  {%- if block.settings.heading != blank -%}
     <{{ block.settings.heading_tag }} class="{{ block.settings.heading_size }}">
       {{ block.settings.heading }}
     </{{ block.settings.heading_tag }}>
   {%- endif -%}
-  {%- if block.settings.description != empty -%}
+  {%- if block.settings.description != blank -%}
     <div>{{ block.settings.description }}</div>
   {%- endif -%}
 </div>
@@ -26,8 +26,7 @@
               src="${imageSrc}" 
               alt="Trust badge" 
               loading="lazy" 
-              width="{block.settings.badge_width}"
-              height="{block.settings.badge_height}"
+              width="{{ block.settings.badge_width }}" 
             />
           </div>
           `;
@@ -136,15 +135,6 @@
       "label": "Badge Width (px)",
       "default": 410
     },
-    {
-      "type": "range",
-      "id": "badge_height",
-      "min": 50,
-      "max": 500,
-      "step": 10,
-      "label": "Badge Height (px)",
-      "default": 110
-    }
   ]
 }
 {% endschema %}
