@@ -1,3 +1,4 @@
+{{ 'app.css' | asset_url | stylesheet_tag }}
 <div id="trust-badges-block">
   {%- if block.settings.heading -%}
     <{{ block.settings.heading_tag }} style="font-size:{{ block.settings.heading_size }};">
@@ -20,12 +21,13 @@
           const isFullUrl = badge.imageUrl.startsWith('http://') || badge.imageUrl.startsWith('https://');
           const imageSrc = isFullUrl ? badge.imageUrl : `${APP_URL}${badge.imageUrl}`;          
           return `
-          <div style="margin-bottom:16px;max-width:{{ block.settings.badge_width }}px;">
+          <div class="trust-badge">
             <img 
               src="${imageSrc}" 
               alt="Trust badge" 
               loading="lazy" 
-              style="width:100%;height:{{ block.settings.badge_height }}px;display:block;" 
+              width="${block.settings.badge_width}"
+              height="${block.settings.badge_height}"
             />
           </div>
           `;
